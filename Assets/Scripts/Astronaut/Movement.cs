@@ -22,7 +22,7 @@ public class Movement : MonoBehaviour
 
     private bool _isGround;
 
-    void Start()
+    private void Start()
     {
         _rigidbody2D = GetComponent<Rigidbody2D>();
         _animator = GetComponent<Animator>();
@@ -31,7 +31,7 @@ public class Movement : MonoBehaviour
         _rigidbody2D.AddForce(Vector2.right * _startSpeed);
     }
 
-    void Update()
+    private void Update()
     {
         _animator.SetBool("walk", false);
         _animator.SetBool("fly", false);
@@ -48,6 +48,8 @@ public class Movement : MonoBehaviour
             }
             else
             {
+                _rightNitro.SetActive(false);
+
                 transform.position = new Vector3(transform.position.x + _speed * Time.deltaTime, transform.position.y, transform.position.z);
 
                 _animator.SetBool("walk", true);
@@ -66,6 +68,8 @@ public class Movement : MonoBehaviour
             }
             else
             {
+                _leftNitro.SetActive(false);
+
                 transform.position = new Vector3(transform.position.x - _speed * Time.deltaTime, transform.position.y, transform.position.z);
 
                 _animator.SetBool("walk", true);
@@ -80,6 +84,8 @@ public class Movement : MonoBehaviour
 
             if (!_isGround)
                 _upNitro.SetActive(true);
+            else
+                _upNitro.SetActive(false);
         }
 
         if (Input.GetKey(KeyCode.DownArrow))
@@ -88,6 +94,8 @@ public class Movement : MonoBehaviour
 
             if (!_isGround)
                 _downNitro.SetActive(true);
+            else
+                _downNitro.SetActive(false);
         }
 
         ResetSetActiveNitro();
@@ -96,7 +104,7 @@ public class Movement : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.tag == "Ground")
+        if (collision.collider.TryGetComponent<Ground>(out Ground ground))
         {
             GetSmoke();
         }
@@ -104,7 +112,7 @@ public class Movement : MonoBehaviour
 
     private void OnCollisionStay2D(Collision2D collision)
     {
-        if (collision.gameObject.tag == "Ground")
+        if (collision.collider.TryGetComponent<Ground>(out Ground ground))
         {
             _animator.SetBool("idle", true);
 
@@ -117,7 +125,7 @@ public class Movement : MonoBehaviour
 
     private void OnCollisionExit2D(Collision2D collision)
     {
-        if (collision.gameObject.tag == "Ground")
+        if (collision.collider.TryGetComponent<Ground>(out Ground ground))
         {
             GetSmoke();
 

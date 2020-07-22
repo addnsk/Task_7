@@ -15,7 +15,7 @@ public class Platforms : MonoBehaviour
     private int _emptyCount = 1;
 
 
-    void Awake()
+    private void Awake()
     {
         System.Random random = new System.Random();
 
@@ -37,9 +37,7 @@ public class Platforms : MonoBehaviour
                 {
                     _emptyCount -= 1;
                 }
-
             }
-
         }
     }
 }

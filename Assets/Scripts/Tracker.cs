@@ -15,7 +15,7 @@ public class Tracker : MonoBehaviour
 
     private Vector2 _newPos;
 
-    void Update()
+    private void Update()
     {
         _corectedY = _astronaut.transform.position.y - (_astronaut.transform.position.y * _paralaxCoefY);
         _corectedX = _astronaut.transform.position.x - (_astronaut.transform.position.x * _paralaxCoefX);

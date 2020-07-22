@@ -9,10 +9,10 @@ public class EnemyPathFinding : MonoBehaviour
     [SerializeField] private Transform _detector;
 
     private RaycastHit2D _groundInfo;
-    private int _movingLeft = -1;
+    private bool _isLeft;
 
 
-    void Update()
+    private void Update()
     {
         transform.Translate(Vector2.left * _speed * Time.deltaTime);
 
@@ -20,15 +20,15 @@ public class EnemyPathFinding : MonoBehaviour
 
         if (!_groundInfo)
         {
-            if (_movingLeft == -1)
+            if (_isLeft)
             {
                 transform.eulerAngles = new Vector3(0, -180, 0);
-                _movingLeft = 1;
+                _isLeft = false;
             }
             else
             {
                 transform.eulerAngles = new Vector3(0, 0, 0);
-                _movingLeft = -1;
+                _isLeft = true;
             }
         }
     }
